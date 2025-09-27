@@ -1,4 +1,0 @@
-.\.venv\Scripts\Activate.ps1
-가상환경 활설화 코드
-deactivate
-비활성화 시키고 원래 기본 시스템 Python 환경으로 돌아간다.
