@@ -41,6 +41,7 @@ def main_menu(driver, wait):
         print("5. 당첨내역상세조회")
         print("esc. 종료")
         print("\n메뉴 키를 눌러 선택하세요 (예: 1~5, esc: 종료)")
+        print(" ")
 
         clear_input_buffer()
 
@@ -171,3 +172,4 @@ if __name__ == "__main__":
     except Exception as e:
         print("오류 발생:", e)
         input("엔터를 누르면 프로그램 종료")
+        

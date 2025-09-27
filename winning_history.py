@@ -92,6 +92,7 @@ def winning_history_menu():
         print("2. 범위내 번호분석")
         print("ESC. 상위 메뉴로 돌아가기")
         print("\n메뉴 키를 눌러 선택하세요 (예: 1~2, ESC: 상위 메뉴)")
+        print(" ")
 
         key_pressed = False
 
@@ -102,14 +103,33 @@ def winning_history_menu():
                 while keyboard.is_pressed("1"):
                     time.sleep(0.1)
                     clear_input_buffer()
-                try:
-                    round_no = int(input("조회할 회차 입력: "))
-                    search_by_round(df, round_no)
-                except ValueError:
-                    print("숫자를 입력하세요.")
+
+                # ✅ 입력 반복 루프
+                while True:
+                    min_round = df["회차"].min()
+                    max_round = df["회차"].max()
+                    try:
+                        print(f"조회 가능범위: {min_round} ~ {max_round}")
+                        round_no = int(input("조회할 회차 입력: "))
+                        print(" ")
+
+                        if round_no < min_round or round_no > max_round:
+                            print("조회가능한 범위를 벗어났습니다.")
+                            print(" ")
+                            continue  # 다시 입력받기
+
+                        # 정상 입력 시 조회 실행
+                        search_by_round(df, round_no)
+                        break
+
+                    except ValueError:
+                        print("숫자를 입력해주세요.")
+                        print(" ")
+                        continue
+
                 key_pressed = True
 
-            # 2. 범위내 분석
+            # 범위내 분석
             elif keyboard.is_pressed("2"):
                 print("범위내 번호분석 선택")
                 while keyboard.is_pressed("2"):

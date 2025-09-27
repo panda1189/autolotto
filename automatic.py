@@ -37,9 +37,13 @@ def automatic_lotto(driver, wait):
     print("\n메뉴로 돌아가시려면 '1', 종료하시려면 'ESC' 키를 누르세요.")
     while True:
         if keyboard.is_pressed('1'):
-            clear_input_buffer()
-            return "menu"
+            while keyboard.is_pressed('1'):
+                time.sleep(0.1)
+                clear_input_buffer()
+            return "menu"   
         elif keyboard.is_pressed('esc'):
-            clear_input_buffer()
-            sys.exit()
-        time.sleep(0.1)  # CPU 과부하 방지
+            while keyboard.is_pressed('esc'):
+                time.sleep(0.1)
+                clear_input_buffer()
+            return "exit" 
+        time.sleep(0.1) # CPU 과부하 방지
