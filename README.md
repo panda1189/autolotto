@@ -1,3 +1,6 @@
+# Lotto Automation Program
+웹웹크롤링과 데이터분석을 기능을 활용하여
+
 ## 자동로그인
 
 ![자동로그인](https://github.com/panda1189/autolotto/raw/main/data/mp_login.gif)
