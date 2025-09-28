@@ -3,7 +3,6 @@ import keyboard
 import pygetwindow as gw
 import time
 from utils import clear_input_buffer
-
 from buy_lotto import buy_lotto_manual
 
 def passivity_lotto(driver, wait):
@@ -27,7 +26,7 @@ def passivity_lotto(driver, wait):
         ticket_nums = []
         while len(ticket_nums) < 6:
             try:
-                num = int(input(f"{len(ticket_nums)+1}번째 숫자 : "))
+                num = int(input(f"{len(ticket_nums)+1}번째 숫자 : ")) # 처음 리스트에는 아무 요소가 없으니 0부터 시작한다.
                 if num < 1 or num > 45:
                     print("1~45 범위의 숫자만 입력 가능합니다.")
                 elif num in ticket_nums:

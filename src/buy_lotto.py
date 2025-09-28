@@ -89,6 +89,6 @@ def buy_lotto_manual(driver, wait, all_tickets):
 
         for handle in driver.window_handles:
             driver.switch_to.window(handle)
-            if "method=main" in driver.current_url:
+            if "method=main" in driver.current_url: # 열려있는 모든 창 중에 method=main 이라는 창을 지정
                 driver.refresh()
                 break

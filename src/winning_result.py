@@ -38,16 +38,16 @@ def check_winning_result(driver, wait, my_tickets=None, go_to_mypage=True):
             raise TimeoutException(f"당첨번호 span 6개를 찾지 못했습니다. (찾은 개수={len(win_spans)})")
 
         win_numbers = []
-        for s in win_spans[:6]:
-            txt = s.text.strip()
-            if not txt.isdigit():
+        for s in win_spans[:6]: # win_spans에서 앞의 6개 요소만 반복 (당첨번호 6개)
+            txt = s.text.strip() # 각 요소의 텍스트를 가져와 공백 제거
+            if not txt.isdigit(): # 만약 숫자가 아니면
                 # 숫자가 늦게 채워지는 경우 잠깐 재시도
                 for _ in range(15):
                     time.sleep(0.1)
                     txt = s.text.strip()
-                    if txt.isdigit():
+                    if txt.isdigit(): # 숫자가 채워졌으면 중단
                         break
-            win_numbers.append(int(txt))
+            win_numbers.append(int(txt)) # 최종적으로 정수로 변환해서 리스트에 추가
 
         bonus_txt = wait.until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "div.win_result .num.bonus p span"))

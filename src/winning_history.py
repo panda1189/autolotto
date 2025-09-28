@@ -97,14 +97,14 @@ def winning_history_menu():
         key_pressed = False
 
         while not key_pressed:
-            # 1. 회차별 조회
+            # 회차별 조회
             if keyboard.is_pressed("1"):
                 print("회차별 당첨번호 조회 선택")
                 while keyboard.is_pressed("1"):
                     time.sleep(0.1)
                     clear_input_buffer()
 
-                # ✅ 입력 반복 루프
+                # 입력 반복 루프
                 while True:
                     min_round = df["회차"].min()
                     max_round = df["회차"].max()

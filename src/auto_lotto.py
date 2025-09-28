@@ -76,18 +76,6 @@ def buy_lotto_automatic(driver, wait, tickets):
         except TimeoutException:
             pass
 
-        # # 구매창 닫기
-        # driver.close()
-
-        # # 메인 홈페이지 창으로 포커스 전환
-        # for handle in driver.window_handles:
-        #     driver.switch_to.window(handle)
-        #     if "method=main" in driver.current_url:
-        #         break
-        
-        # driver.refresh()
-        # return "success"
-
     except TimeoutException as e:
         print("오류 발생! 자동구매 루틴 중 문제:", e)
     
