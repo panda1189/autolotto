@@ -20,7 +20,7 @@
 
 ![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/mp_logic2.gif)
 
-# 진행상황
+# 진행일지
 
 ## 1. 기능
 
