@@ -1,24 +1,27 @@
+# Lotto Automation Program
+웹웹크롤링과 데이터분석을 기능을 활용하여
+
 ## 자동로그인
 
-![자동로그인](https://github.com/panda1189/autolotto/raw/main/mp_login.gif)
+![자동로그인](https://github.com/panda1189/autolotto/raw/main/data/mp_login.gif)
 
 ## 수동번호 자동구매
 
-![수동번호 자동구매](https://github.com/panda1189/autolotto/raw/main/mp_manual.gif)
+![수동번호 자동구매](https://github.com/panda1189/autolotto/raw/main/data/mp_manual.gif)
 
 ## 자동번호 자동구매
 
-![자동번호 자동구매](https://github.com/panda1189/autolotto/raw/main/mp_auto.gif)
+![자동번호 자동구매](https://github.com/panda1189/autolotto/raw/main/data/mp_auto.gif)
 
 ## 당첨결과확인
 
-![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/mp_result.gif)
+![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/data/mp_result.gif)
 
 ## 모든기능로직
 
-![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/mp_logic1.gif)
+![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/data/mp_logic1.gif)
 
-![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/mp_logic2.gif)
+![당첨결과확인](https://github.com/panda1189/autolotto/raw/main/data/mp_logic2.gif)
 
 # 진행일지
 
