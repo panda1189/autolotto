@@ -37,3 +37,6 @@ activate.txt      # 가상환경 실행용 스크립트는 올리지 않아도 �
 .env
 activate.txt
 lotto.spec
+lotto.mp4
+mvpicture.py
+mvpicturetext.py
