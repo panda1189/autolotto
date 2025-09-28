@@ -5,7 +5,7 @@ from utils import clear_input_buffer
 
 # CSV 불러오기
 def load_data():
-    return pd.read_csv("winning_all.csv")
+    return pd.read_csv("data/winning_all.csv")
 
 # 회차별 당첨번호 조회
 def search_by_round(df, round_no):

@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 
-def update_winning_csv(round_no, win_numbers, bonus_number, csv_path="winning_all.csv"):
+def update_winning_csv(round_no, win_numbers, bonus_number, csv_path="data/winning_all.csv"):
     # CSV 불러오기
     df = pd.read_csv(csv_path)
 

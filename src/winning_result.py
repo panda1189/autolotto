@@ -68,7 +68,7 @@ def check_winning_result(driver, wait, my_tickets=None, go_to_mypage=True):
         print(f"보너스번호 : [{bonus_number}]")
 
         # CSV 자동 업데이트
-        update_winning_csv(round_no, win_numbers, bonus_number, csv_path="winning_all.csv")
+        update_winning_csv(round_no, win_numbers, bonus_number, csv_path="data/winning_all.csv")
 
         # 마이페이지 이동
         if go_to_mypage:
