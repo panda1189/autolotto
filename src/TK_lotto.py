@@ -1,13 +1,10 @@
 import tkinter as tk
 import sys, os
+import threading
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-
-# UI 불러오기
 from TK_UI import LottoUI, RedirectText
-
-# 기존 기능 모듈
 from login import login_function
 from balance import check_balance
 from passivity import passivity_lotto
@@ -23,8 +20,29 @@ class LottoController:
         self.wait = None
         self.env_path = ".env"
 
-        # 처음엔 로그인 화면 표시
-        self.ui.show_login_screen(self.login)
+        # 실행 시 .env 확인
+        if os.path.exists(self.env_path):
+            load_dotenv(self.env_path)
+            user_id = os.getenv("LOTTO_USER")
+            user_pw = os.getenv("LOTTO_PASS")
+
+            if user_id and user_pw:
+                # 자동 로그인 시도
+                self.init_driver()
+                if login_function(self.driver, self.wait):
+                    # 바로 메인 메뉴 표시
+                    self.ui.show_main_menu(self.run_menu)
+
+                    # 출력 리디렉션
+                    sys.stdout = RedirectText(self.ui.text_area)
+                else:
+                    from tkinter import messagebox
+                    messagebox.showerror("실패", "자동 로그인 실패. 로그인 화면으로 이동합니다.")
+                    self.ui.show_login_screen(self.login)
+            else:
+                self.ui.show_login_screen(self.login)
+        else:
+            self.ui.show_login_screen(self.login)
 
     # =============================
     # 드라이버 초기화
@@ -69,21 +87,27 @@ class LottoController:
             if self.driver:
                 self.driver.quit()
             self.ui.root.quit()
+        else:
+            # UI 멈춤 방지 위해 스레드에서 실행
+            threading.Thread(
+                target=self._execute_menu, args=(menu_name,), daemon=True
+            ).start()
 
-        elif menu_name == "잔액조회":
+    def _execute_menu(self, menu_name):
+        if menu_name == "잔액조회":
             check_balance(self.driver, self.wait)
 
         elif menu_name == "수동번호구매":
-            passivity_lotto(self.driver, self.wait)
+            passivity_lotto(self.driver, self.wait, self.ui)
 
         elif menu_name == "자동번호구매":
-            automatic_lotto(self.driver, self.wait)
+            automatic_lotto(self.driver, self.wait, self.ui)
 
         elif menu_name == "당첨결과조회":
             check_winning_result(self.driver, self.wait, go_to_mypage=True)
 
         elif menu_name == "당첨내역상세조회":
-            winning_history_menu()
+            winning_history_menu(self.ui)
 
 
 if __name__ == "__main__":

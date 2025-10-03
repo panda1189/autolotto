@@ -99,15 +99,6 @@ def check_winning_result(driver, wait, my_tickets=None, go_to_mypage=True):
             driver.switch_to.window(handle)
             if "method=main" in driver.current_url:
                 break
-        
-        # 사용자 입력 대기 (메뉴 or 종료)
-        print("\n메뉴로 돌아가시려면 '1', 종료하시려면 'ESC' 키를 누르세요.")
-        while True:
-            if keyboard.is_pressed('1'):
-                return "메뉴"
-            elif keyboard.is_pressed('esc'):
-                sys.exit()
-            time.sleep(0.1)  # CPU 과부하 방지
 
     except Exception as e:
         print("오류 발생:", e)

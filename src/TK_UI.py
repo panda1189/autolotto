@@ -27,7 +27,10 @@ class LottoUI:
         style.configure("TEntry", font=("맑은 고딕", 18))
 
         self.text_area = None
-
+        self.input_var = None
+        self.input_entry = None
+        self.input_queue = queue.Queue()
+    
     # =============================
     # 로그인 화면
     # =============================
@@ -73,11 +76,47 @@ class LottoUI:
             btn = ttk.Button(button_frame, text=name, command=lambda n=name: menu_callback(n), width=25)
             btn.grid(row=i//2, column=i%2, padx=20, pady=15, sticky="ew")
 
-        self.text_area = tk.Text(self.root, wrap="word", height=20, font=("Consolas", 14))
-        self.text_area.pack(fill="both", expand=True, padx=15, pady=15)
+        # ✅ 입력창을 먼저 배치
+        self.input_var = tk.StringVar()
+        self.input_entry = tk.Entry(
+            self.root, textvariable=self.input_var, font=("Consolas", 14)
+        )
+        self.input_entry.pack(fill="x", padx=15, pady=(10, 5))
+        self.input_entry.bind("<Return>", self._on_enter)
+
+        # 출력창 (터미널 역할)
+        self.text_area = tk.Text(
+            self.root, wrap="word", height=20, font=("Consolas", 14)
+        )
+        self.text_area.pack(fill="both", expand=True, padx=15, pady=(5, 15))
 
     # =============================
-    # 유틸: 화면 초기화
+    # 입력 처리
+    # =============================
+    def _on_enter(self, event=None):
+        value = self.input_var.get().strip()
+        if value:
+            self.input_queue.put(value)           # 입력값 저장
+            self.text_area.insert(tk.END, f"> {value}\n")  # 출력창에 표시
+            self.text_area.see(tk.END)
+            self.input_var.set("")                # 입력창 초기화
+
+    # =============================
+    # input() 대체
+    # =============================
+    def ui_input(self, prompt=""):
+        if prompt:
+            self.text_area.insert(tk.END, prompt + "\n")
+            self.text_area.see(tk.END)
+
+        while True:
+            try:
+                return self.input_queue.get(timeout=0.1)
+            except queue.Empty:
+                self.root.update()
+
+    # =============================
+    # 화면 초기화
     # =============================
     def clear_window(self):
         for widget in self.root.winfo_children():
