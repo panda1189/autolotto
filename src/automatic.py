@@ -22,14 +22,10 @@ def automatic_lotto(driver, wait, ui):
 
     result, purchased_numbers = buy_lotto_automatic(driver, wait, tickets)
 
-    if result == "success" and purchased_numbers:
-        print(f"\n✅ 자동 로또 {tickets}매 구매 완료!\n")
-
-        # 6개씩 끊어서 출력
-        for idx in range(tickets):
-            start = idx * 6
-            end = start + 6
-            ticket_nums = purchased_numbers[start:end]
-            print(f"{idx+1}번째 로또 : {ticket_nums}")
+    if result == "success" and purchased_tickets:
+        print(f"\n자동 로또 {len(purchased_tickets)}매 구매 완료!\n")
+        # 수동구매와 동일하게 티켓별 출력
+        for idx, ticket in enumerate(purchased_tickets, start=1):
+            print(f"{idx}번째 로또 : {ticket}")
     else:
         print("자동 로또 구매 실패")

@@ -9,11 +9,10 @@ from selenium.webdriver.support.ui import Select
 def buy_lotto_automatic(driver, wait, tickets):
     """
     자동번호 구매 실행 함수
-    번호 리스트도 함께 반환
+    -> 각 티켓별 번호를 2차원 배열로 반환
+       예: [[1,2,3,4,5,6], [7,8,9,10,11,12], ...]
     """
     try:
-        existing_windows = driver.window_handles  
-
         # 새 창 열기
         driver.execute_script("window.open('https://el.dhlottery.co.kr/game/TotalGame.jsp?LottoId=LO40');")
         driver.switch_to.window(driver.window_handles[-1])
@@ -57,7 +56,7 @@ def buy_lotto_automatic(driver, wait, tickets):
         driver.execute_script("arguments[0].click();", popup_ok)
         wait.until(EC.invisibility_of_element_located((By.ID, "popupLayerConfirm")))
 
-        # 예치금 부족 팝업 확인
+        # ❌ 예치금 부족 팝업 확인
         try:
             alert_ok = WebDriverWait(driver, 3).until(
                 EC.element_to_be_clickable((
@@ -66,18 +65,24 @@ def buy_lotto_automatic(driver, wait, tickets):
                 ))
             )
             driver.execute_script("arguments[0].click();", alert_ok)
-            print("예치금이 부족합니다.")
+            print("❌ 예치금이 부족합니다.")
             return "fail", []
         except TimeoutException:
             pass
 
-        # 구매번호 추출
-        purchased_numbers = []
+        # ✅ 구매번호 추출 (티켓 단위)
+        purchased_tickets = []
         try:
-            rows = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#reportRow div.nums span")))
-            purchased_numbers = [int(el.text) for el in rows if el.text.strip().isdigit()]
+            ticket_divs = wait.until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#reportRow"))
+            )
+            for div in ticket_divs:
+                spans = div.find_elements(By.CSS_SELECTOR, "div.nums span")
+                nums = [int(el.text) for el in spans if el.text.strip().isdigit()]
+                if nums:
+                    purchased_tickets.append(nums)
         except Exception:
-            purchased_numbers = []
+            purchased_tickets = []
 
         # 구매내역 확인 레이어 닫기
         try:
@@ -88,7 +93,7 @@ def buy_lotto_automatic(driver, wait, tickets):
         except TimeoutException:
             pass
 
-        return "success", purchased_numbers
+        return "success", purchased_tickets
 
     except TimeoutException as e:
         print("오류 발생! 자동구매 루틴 중 문제:", e)
