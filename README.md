@@ -1,6 +1,8 @@
 # Lotto Automation Program
 Selenium을 활용한 자동화,웹기능조작,웹크롤링  
 Pandas를 활용한 데이터분석  
+TK_inter를 활용한 UI버튼 프로그램  
+pyinstaller를 활용하여 .exe 파일생성  
 이상 기능들을 활용하여 만든 간단한 로또자동화프로그램입니다.
 
 ## 주요기능
@@ -145,3 +147,8 @@ Pandas를 활용한 데이터분석
 **추후 개선방향 :** 
 
 TK INTER를 활용해 간단한 UI가 있는 프로그램을 만들어 좀 더 편하게 편하게 쓰게 만들 예정
+
+**10월 03일)**
+
+TK INTER를 활용해 UI 클릭으로 이용하는 프로그램 완성
+pyinstaller 라이브러리를 활용하여 .exe 프로그램으로 만들어 접근성 개선
