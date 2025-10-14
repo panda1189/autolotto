@@ -30,7 +30,6 @@ class LottoUI:
         self.input_var = None
         self.input_entry = None
         self.input_queue = queue.Queue()
-    
     # =============================
     # 로그인 화면
     # =============================
@@ -90,6 +89,35 @@ class LottoUI:
         )
         self.text_area.pack(fill="both", expand=True, padx=15, pady=(5, 15))
 
+        # 입력창 (터미널 아래에 추가)
+        input_frame = ttk.Frame(self.root)
+        input_frame.pack(fill="x", padx=15, pady=5)
+
+        entry = tk.Entry(input_frame, textvariable=self.input_var, font=("Consolas", 14))
+        entry.pack(side="left", fill="x", expand=True)
+        entry.bind("<Return>", self._on_enter)
+
+        send_btn = ttk.Button(input_frame, text="입력", command=self._on_enter)
+        send_btn.pack(side="right")
+
+    # 입력 처리 메서드 추가
+    def _on_enter(self, event=None):
+        text = self.input_var.get().strip()
+        if text:
+            self.input_queue.put(text)   # 입력 저장
+            self.input_var.set("")       # 입력창 비우기
+            self.text_area.insert(tk.END, f">>> {text}\n")  # 입력값 터미널에도 표시
+            self.text_area.see(tk.END)
+
+    def ui_input(self, prompt=""):
+        """input() 대체 함수"""
+        if prompt:
+            self.text_area.insert(tk.END, prompt + "\n")
+            self.text_area.see(tk.END)
+
+        # 사용자 입력 대기
+        return self.input_queue.get(block=True)
+    
     # =============================
     # 입력 처리
     # =============================
